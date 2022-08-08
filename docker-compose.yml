@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+    postgres:
+        container_name: "${POSTGRES__CONTAINER_NAME}"
+        image: "postgres:latest"
+        restart: always
+        volumes:
+            - dataweave:/var/lib/postgresql/data
+        ports:
+            - "${POSTGRES__PORT}:5432"
+        environment:
+            POSTGRES_PASSWORD: "${POSTGRES__PASSWORD}"
+            POSTGRES_USER: "${POSTGRES__USERNAME}"
+            POSTGRES_DB: "${POSTGRES__DBNAME}"
+
+volumes:
+    dataweave:
+        name: "${VOLUME_NAME}"
