@@ -44,3 +44,4 @@ def setup_db():
     _create_enums()  # Choosing an enum here since a FK table will be overkill for this demo.
     _create_table()
     connection.commit()
+    register_enums()
