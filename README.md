@@ -33,9 +33,9 @@ scripts/sort 1111 1110 1190 1200 1220 1300 1350 2450 1450 2950 -s 3 -e 2
 ```
 
 # Student marks
-Given a number of students and their marks, get the top 3 students ordered by their total marks.<br>
-In case of collisions, order by theory first.<br>
-In case of further collisions, sort alphabetically.
+Given a number of students and their marks, get the top 3 students ordered by their total marks (1st Level).<br>
+In case of collisions, order by theory first (2nd Level).<br>
+In case of further collisions, sort alphabetically (3rd Level).
 
 ```shell
 # Run docker-compose to spin up the DB container and volume
@@ -52,4 +52,15 @@ scripts/marks-analysis # Add -n optionally to specify number of students.
 
 # To reset the data and the containers
 docker-compose down -v
+```
+
+### Attempting to solve this using SQL:
+Could only solve the first level of sorting. Efforts underway to solve the 2nd and 3rd level.
+
+```postgresql
+select r, student_id, total_marks
+from (select dense_rank() over (order by sum(marks) desc) as r, student_id, sum(marks) as total_marks
+      from student_marks
+      group by student_id) sq
+where sq.r <= 3;
 ```
