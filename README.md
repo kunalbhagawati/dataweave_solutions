@@ -48,5 +48,8 @@ scripts/db setup
 scripts/db seed
 
 # Run the script
-scripts/marks-analysis
+scripts/marks-analysis # Add -n optionally to specify number of students.
+
+# To reset the data and the containers
+docker-compose down -v
 ```
